@@ -1,3 +1,7 @@
+# Use libheif in Android platform
+## 参考以下两个项目
+- [编译过程](https://github.com/WanghongLin/miscellaneous/blob/master/docs/libheif4Android.md)
+- [HeifAndroid](https://github.com/WanghongLin/HeifAndroid)
 # heif格式图片在Android端处理，例如heif的编码、解码以及和jpg、png等格式互相转换、
 ## 依赖以下第三方库
 - 必须[libheif v1.12.0](https://github.com/strukturag/libheif)
