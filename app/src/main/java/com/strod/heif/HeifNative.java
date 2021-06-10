@@ -6,6 +6,7 @@ package com.strod.heif;
 public class HeifNative {
 
     static {
+        System.loadLibrary("c++_shared");
         System.loadLibrary("jpeg");
         System.loadLibrary("heif");
         System.loadLibrary("heif_jni");

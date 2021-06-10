@@ -1,22 +1,22 @@
 # Use libheif in Android platform
 ## 参考以下两个项目
-- [编译过程](https://github.com/WanghongLin/miscellaneous/blob/master/docs/libheif4Android.md)
+- [编译文档](https://github.com/WanghongLin/miscellaneous/blob/master/docs/libheif4Android.md)
 - [HeifAndroid](https://github.com/WanghongLin/HeifAndroid)
 # heif格式图片在Android端处理，例如heif的编码、解码以及和jpg、png等格式互相转换、
 ## 依赖以下第三方库
-- 必须[libheif v1.12.0](https://github.com/strukturag/libheif)
-- 必须[libde265 v1.0.8](https://github.com/strukturag/libde265)
-- 必须[x265 master](https://github.com/videolan/x265)
-- 可选[libjpeg v2.0.x](https://github.com/libjpeg-turbo/libjpeg-turbo)
-- 可选[libpng v1.6.37](https://libpng.sourceforge.io/)
+- 必须 [libheif v1.12.0](https://github.com/strukturag/libheif)
+- 必须 [libde265 v1.0.8](https://github.com/strukturag/libde265)
+- 必须 [x265 master](https://github.com/videolan/x265)
+- 可选 [libjpeg v2.0.x](https://github.com/libjpeg-turbo/libjpeg-turbo)
+- 可选 [libpng v1.6.37](https://libpng.sourceforge.io/)
 ## 难点在交叉编译这些库的过程[参考](https://github.com/WanghongLin/miscellaneous/blob/master/docs/libheif4Android.md),这个参考链接有几个小误区,下面会介绍
 - 本人在linux环境下编译，下载Android ndk android-ndk-r17c,装好automake,cmake等工具
 - Create a standalone toolchains(tmp目录系统重启貌似会擦除上次新增的)
 ```
-$ cd /tmp/android-ndk-r17c/build/tools
+$ cd /home/Android/android-ndk-r17c/build/tools
 $ ./make_standalone_toolchain.py --arch arm --api 21 --stl libc++ --install-dir /tmp/ndk
 ```
-##Build x265 from CMakeLists.txt
+## Build x265 from CMakeLists.txt
 - Get the [source](https://github.com/videolan/x265)
 ```
 $ cd /tmp
@@ -42,7 +42,7 @@ $ make -j8 && make install
 ```
 After build done, the generated static library should be found at `/tmp/out/x265`
 
-##Build libde265 for Android
+## Build libde265 for Android
 - Get the [source](https://github.com/videolan/x265)
 ```
 $ cd /tmp
@@ -66,7 +66,7 @@ $ ./configure --prefix=/tmp/out/libde265 --enable-shared=no --host=arm-linux-and
 ```
 After done, the output can be found at `/tmp/out/libde265`
 
-##Build libpng for Android(如果需要heif和png格式互相转换)
+## Build libpng for Android(如果需要heif和png格式互相转换)
 - Get and extract the source Download the source from [Source Forge](https://libpng.sourceforge.io/)
 ```
 $ cd /tmp
@@ -80,7 +80,7 @@ $ make -j8 && make install
 ```
 After build done, the installed files can be found at `/tmp/out/libpng`
 
-##Build libjpeg for Android(如果需要heif和jpeg格式互相转换)
+## Build libjpeg for Android(如果需要heif和jpeg格式互相转换)
 - 注意:libjpeg在libheif中是以外部so库链接,在Android项目中加载libjpeg.so库;这点和libpng不同,libpng是以内部库链接方式编译在libheif.so中
 - Get and extract the source Download the source from [Source Forge](https://github.com/libjpeg-turbo/libjpeg-turbo)
 ```
@@ -121,9 +121,9 @@ make install
 $ sudo sh build.sh
 ```
 
-After build done, the installed files can be found at `/tmp/out/libjpeg`
+After build done, the installed files can be found at `/tmp/out/libjpeg-turbo`
 
-##Build libheif for Android
+## Build libheif for Android
 - Get the [source code](https://github.com/strukturag/libheif)
 ```
 $ cd /tmp
@@ -144,3 +144,4 @@ $ ./configure --prefix=/tmp/out/libheif --host=arm-linux-androideabi
 ```
 After done, the installed files can be found at `/tmp/out/libheif`.
 Now we can integrate libheif into our Android project and export the native API to Java by JNI.
+把编译出来的/tmp/out目录下的libheif/lib/libheif.so和libjpeg-turbo/lib/libjpeg.so以及相关头文件，拷贝到Android项目中使用
